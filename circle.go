@@ -1,24 +1,23 @@
 package main
 
 import (
+	"go-graphics/openGlUtils"
 	"math"
 
 	"github.com/go-gl/gl/v4.1-core/gl"
 )
 
-// circle properties
-var (
-	yPosition      float32
-	xPosition      float32
-	radius         float32
-	startSpeed     float32
-	acceleration   float32
-	currentSpeed   float32
-	directionAngle float32
-	circle         *drawable
+const (
+	segments = 100
+	radius   = 0.09
 )
 
-func updateCircle(d *drawable, radius float32) *drawable {
+func updateCircle(circleGeometry *geometry) *drawable {
+	d := circleGeometry.drawable
+	position := calculatePosition(circleGeometry.position, circleGeometry.velocity, globalAcceleration)
+	xPosition := position[0]
+	yPosition := position[1]
+
 	var vertices []float32
 	numSegments := segments
 
@@ -41,11 +40,15 @@ func updateCircle(d *drawable, radius float32) *drawable {
 		prevY = y
 	}
 
-	d.content = makeVao(vertices)
+	d.content = openGlUtils.MakeVao(vertices)
 
 	return d
 }
 
-func initCircle() *drawable {
-	return &drawable{length: segments * 3, glType: gl.TRIANGLES}
+func makeCircle(position []float32, velocity []float32) *geometry {
+	newCircleDrawable := &drawable{length: segments * 3, glType: gl.TRIANGLES}
+	newCircleGeometry := &geometry{drawable: newCircleDrawable, position: position, velocity: velocity}
+	updateCircle(newCircleGeometry)
+
+	return newCircleGeometry
 }

@@ -1,32 +1,23 @@
 package main
 
 import (
-	"fmt"
+	"go-graphics/glfwUtils"
+	"go-graphics/openGlUtils"
 	"runtime"
-	"time"
-
-	"github.com/go-gl/glfw/v3.2/glfw"
-)
-
-var (
-	startGameTimer time.Timer
 )
 
 func main() {
 	runtime.LockOSThread()
 
-	window := initGlfw()
-	defer glfw.Terminate()
+	window, terminate := glfwUtils.CreateWindow("Pong", 500, 500)
+	defer terminate()
+	glfwUtils.AddKeyCallback(keyPressCallback)
 
-	program := initOpenGL()
+	program := openGlUtils.InitProgram()
 	reset()
+
 	for !window.ShouldClose() {
-		select {
-		case <-startGameTimer.C:
-			fmt.Println("timer fired")
-			startGame()
-		default:
-		}
+		handlePressedKeys()
 		draw(window, program)
 	}
 }

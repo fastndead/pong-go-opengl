@@ -1,13 +1,9 @@
-# Pong Game in Golang
+# Brownian motion
 
-This is a simple implementation of the classic game Pong in Golang using OpenGL.
+This is a simple simulation of a [brownian motion](https://en.wikipedia.org/wiki/Brownian_motion)
 
 ## How to Run
 
-To play the game, simply run the following command in your terminal:
+In order to run this simulation you need to run the following command from the root directory
 
 `go run *.go`
-
-## Gameplay
-
-Once the game is running, you can control the paddle using the arrow keys for the player on the right and the W and S keys for the player on the left. The objective of the game is to bounce the ball past your opponent's paddle while preventing the ball from passing your own paddle.

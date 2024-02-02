@@ -1,4 +1,4 @@
-package main
+package openGlUtils
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 	"github.com/go-gl/gl/v4.1-core/gl"
 )
 
-func initOpenGL() uint32 {
+func InitProgram() uint32 {
 	if err := gl.Init(); err != nil {
 		panic(err)
 	}
