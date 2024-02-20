@@ -8,15 +8,14 @@ import (
 )
 
 const (
-	segments = 100
-	radius   = 0.09
+	segments = 6
+	radius   = float32(.01)
 )
 
 func updateCircle(circleGeometry *geometry) *drawable {
 	d := circleGeometry.drawable
-	position := calculatePosition(circleGeometry.position, circleGeometry.velocity, globalAcceleration)
-	xPosition := position[0]
-	yPosition := position[1]
+	xPosition := circleGeometry.position[0]
+	yPosition := circleGeometry.position[1]
 
 	var vertices []float32
 	numSegments := segments
@@ -47,7 +46,7 @@ func updateCircle(circleGeometry *geometry) *drawable {
 
 func makeCircle(position []float32, velocity []float32) *geometry {
 	newCircleDrawable := &drawable{length: segments * 3, glType: gl.TRIANGLES}
-	newCircleGeometry := &geometry{drawable: newCircleDrawable, position: position, velocity: velocity}
+	newCircleGeometry := &geometry{drawable: newCircleDrawable, position: position, velocity: velocity, resting: false, previousVelocities: []float32{}, elasticity: 1}
 	updateCircle(newCircleGeometry)
 
 	return newCircleGeometry
